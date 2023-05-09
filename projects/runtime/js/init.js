@@ -32,7 +32,7 @@ var init = function (window) {
     ground = opspark.makeGround(app);
 
     // TODO 2 : add background
-    
+   
     
 
     

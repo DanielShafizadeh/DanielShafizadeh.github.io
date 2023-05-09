@@ -41,10 +41,10 @@ var background = function (window) {
             
             // TODO: 3 - Add a moon and starfield
             var moon = draw.bitmap("img/moon.png");
-            moon.x=700;
-            moon.y=5;
-            moon.scaleX=0.5;
-            moon.scaleY=0.5;
+            moon.x=300;
+            moon.y=200;
+            moon.scaleX=10.;
+            moon.scaleY=10.;
             background.addChild(moon);
 
             for(var i=0; i<300;i++){
@@ -56,7 +56,7 @@ var background = function (window) {
             // TODO 5: Part 1 - Add buildings!     Q: This is before TODO 4 for a reason! Why?
             var buildings =[];
             for(var i=0;i<5;i++){
-                var buildingHeight=Math.floor(Math.random()*200)+100;
+                var buildingHeight=300;
                 var building=draw.rect(75,buildingHeight,"LightGray","Black",1);
                 building.x=200*i;
                 building.y=groundY-buildingHeight;
@@ -65,7 +65,7 @@ var background = function (window) {
             }
             
             // TODO 4: Part 1 - Add a tree
-            tre=draw.bitmap("img/tree.png")
+            tree=draw.bitmap("img/tree.png")
             tree.x=0;
             tree.y=groundY+20;
             background.addChild(tree);
