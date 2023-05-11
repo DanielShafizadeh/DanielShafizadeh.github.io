@@ -16,12 +16,13 @@ var level01 = function (window) {
             "number": 1, 
             "speed": -3,
             "gameItems": [
-                { "type": "sawblade", "x": 400, "y": groundY-21 },
-                { "type": "sawblade", "x": 600, "y": groundY },
-                { "type": "sawblade", "x": 900, "y": groundY },
-                { "type": "reward", "x": 200, "y": groundY-30},
-              
-                {"type":"enemy","x":200,"y":groundY},
+                { "type": "sawblade", "x": 400, "y": groundY-120 },
+                { "type": "sawblade", "x": 700, "y": groundY-75 },
+                { "type": "sawblade", "x": 1200, "y": groundY-35 },
+                { "type": "reward", "x": 2000, "y": groundY-128},
+                { "type": "custom", "x": 1000, "y": groundY-5},
+                {"type":"enemy","x":1800,"y":groundY-64},
+                {"type":"enemy","x":2200,"y":groundY},
 
 
 
@@ -38,6 +39,9 @@ var level01 = function (window) {
             else if(ite.type==="enemy"){
                 createEnemy(ite.x,ite.y);
             }
+            else if(ite.type==="custom"){
+                createProjectile(ite.x,ite.y);
+            }
         
             
         }
@@ -51,32 +55,46 @@ var level01 = function (window) {
             var hitZoneSize=25;
             var damageFromObstacle=10;
             var sawBladeHitZone=game.createObstacle(hitZoneSize,damageFromObstacle);
-            sawBladeHitZone.x=-25;
-            sawBladeHitZone.y=-25;
+            sawBladeHitZone.x=x;
+            sawBladeHitZone.y=y;
             game.addGameItem(sawBladeHitZone);
             var obstacleImage=draw.bitmap("img/sawblade.png");
             sawBladeHitZone.addChild(obstacleImage);
-            obstacleImage.x=x;
-            obstacleImage.y=y;
+            obstacleImage.x=-hitZoneSize;
+            obstacleImage.y=-hitZoneSize;
+        }
+        function createProjectile(x,y){
+            var hitZoneSize=50;
+            var damageFromObstacle=10;
+            var myProj = game.createObstacle(hitZoneSize,damageFromObstacle);
+            myProj.x=x;
+            myProj.y=y;
+            game.addGameItem(myProj);
+            var obstacleImage=draw.bitmap('img/car.png');
+            myProj.addChild(obstacleImage);
+            obstacleImage.x=-hitZoneSize;
+            obstacleImage.y=-hitZoneSize;
+
         }
        
        
        
         
         function createEnemy(x,y){
-            var enemy=game.createGameItem("enemy",25);
-            var redSquare=draw.rect(50,50,"red");
-            redSquare.x=-x;
-            redSquare.y=-y;
+            var enemy=game.createGameItem("enemy",80);
+            var redSquare=draw.bitmap('img/gman.png');
+            redSquare.x=-80;
+            redSquare.y=-80;
             enemy.addChild(redSquare);
             enemy.x=x;
             enemy.y=y;
-            enemy.velocityX=-2;
+            
             
             
             game.addGameItem(enemy);
-            enemy.onPlayerCollision = function () {game.changeIntegrity(-30);};
-            enemy.onProjectileCollision = function () {game.increaseScore(100);
+            enemy.velocityX=-2;
+            enemy.onPlayerCollision = function () {game.changeIntegrity(-50);};
+            enemy.onProjectileCollision = function () {game.increaseScore(200);
             enemy.fadeOut();};
             
         };
@@ -85,17 +103,17 @@ var level01 = function (window) {
         function createReward(x,y){
             var reward=game.createGameItem("reward",25);
             var blueCirc=draw.circle(25,"blue");
-            blueCirc.x=-10;
-            blueCirc.y=-10;
+            blueCirc.x=-32;
+            blueCirc.y=-32;
             reward.addChild(blueCirc);
-            reward.x=400;
-            reward.y=groundY-50;
+            reward.x=x;
+            reward.y=y;
             game.addGameItem(reward);
-            reward.velocityX=10;
-            reward.rotationalVelocity=25;
-            reward.onPlayerCollision = function () {game.changeIntegrity(+30);game.increaseScore(300);};
+            reward.velocityX=-2;
+            reward.rotationalVelocity=4;
+            reward.onPlayerCollision = function () {game.changeIntegrity(+25);game.increaseScore(300); reward.fadeOut();};
             reward.onProjectileCollision = function () {
-            reward.shrink();};
+            reward.fadeOut();};
         };
         
         
